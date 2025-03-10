@@ -129,11 +129,23 @@
         }
 
         function sendWhatsAppLocation() {
-            var phoneNumber = "60135206588"; 
-            var message = encodeURIComponent("Here is the location of Lucky the dog.");
-            var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            var phoneNumber = "60135206588"; // 目标 WhatsApp 号码
+            var message = encodeURIComponent(`Here is the location of Lucky the dog: ${googleMapsLink}`);
+            var url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
             window.open(url, "_blank");
-        }
+        }, function(error) {
+            alert("Failed to get location. Please enable GPS.");
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
     </script>
 </body>
 </html>
