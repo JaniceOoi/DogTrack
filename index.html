@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Switch</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f8c8dc, #a3d0f7);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .tabs button {
+            background: #ff85a2;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tabs button:hover {
+            background: #ff4d79;
+        }
+        .content {
+            font-size: 18px;
+            display: none;
+        }
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .send-location {
+            background: #ff6699;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .send-location:hover {
+            background: #ff3366;
+        }
+        .decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            font-size: 24px;
+        }
+        .decorations span {
+            position: absolute;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="decorations">
+        <span style="top: 10%; left: 20%;">☁️</span>
+        <span style="top: 5%; left: 70%;">☁️</span>
+        <span style="top: 15%; left: 40%;">☁️</span>
+        <span style="top: 30%; left: 80%;">🐾</span>
+        <span style="top: 60%; left: 10%;">🐾</span>
+        <span style="top: 75%; left: 50%;">🌿</span>
+        <span style="top: 80%; left: 30%;">🌿</span>
+    </div>
+    <div class="container">
+        <div class="tabs">
+            <button onclick="changeLanguage('en')">English</button>
+            <button onclick="changeLanguage('zh')">中文</button>
+            <button onclick="changeLanguage('ms')">Bahasa</button>
+        </div>
+        <div id="en" class="content active">
+            <h2>🐶 Dog Info</h2>
+            <p><strong>Name:</strong> Lucky</p>
+            <p><strong>Owner:</strong> Mr. Wang</p>
+            <p><strong>Contact:</strong> +60135206588</p>
+            <button class="send-location" onclick="sendWhatsAppLocation()">📍 Send Location</button>
+        </div>
+        <div id="zh" class="content">
+            <h2>🐶 狗狗信息</h2>
+            <p><strong>名字:</strong> Lucky</p>
+            <p><strong>主人:</strong> 王先生</p>
+            <p><strong>联系电话:</strong> +60135206588</p>
+            <button class="send-location" onclick="sendWhatsAppLocation()">📍 发送位置</button>
+        </div>
+        <div id="ms" class="content">
+            <h2>🐶 Maklumat Anjing</h2>
+            <p><strong>Nama:</strong> Lucky</p>
+            <p><strong>Pemilik:</strong> Encik Wang</p>
+            <p><strong>Hubungi:</strong> +60135206588</p>
+            <button class="send-location" onclick="sendWhatsAppLocation()">📍 Hantar Lokasi</button>
+        </div>
+    </div>
+    <script>
+        function changeLanguage(lang) {
+            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+            document.getElementById(lang).classList.add('active');
+        }
+
+        function sendWhatsAppLocation() {
+            var phoneNumber = "60135206588"; 
+            var message = encodeURIComponent("Here is the location of Lucky the dog.");
+            var url = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + message;
+            window.open(url, "_blank");
+        }
+    </script>
+</body>
+</html>
